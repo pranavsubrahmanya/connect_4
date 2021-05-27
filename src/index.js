@@ -14,7 +14,7 @@ I have put dollar signs where you need to fill up
 function Square(props) {
     return (
       <button className="square" onClick={() => props.onClick()}>
-        <div className={props.value === 'Red' ? "red-player" : props.value === 'Yellow' ? "yellow-player" : 'circle'}></div>
+        <div className={props.value === 'Red' ? "circle red-player" : props.value === 'Yellow' ? "circle yellow-player" : 'circle'}></div>
       </button>
     );
 }
@@ -34,7 +34,7 @@ class Col extends React.Component {
         return (
             <Square
               value={this.props.value[i]}
-              onClick={() => this.props.onClick(i)}
+              onClick={() => this.props.onClick()}
             />
           );
     }
@@ -67,7 +67,7 @@ class Board extends React.Component {
     //hence 7 x 6, don't get confused
     constructor() {
         super();
-        this.state = {
+        this.state ={
             boardValue: new Array(7).fill(null).map(row => new Array(6).fill(null)),
             redIsNext: true,
             winner: null
@@ -124,11 +124,11 @@ class Board extends React.Component {
         boardValue will be val
         redIsNext should be complemented
         winner assign curWinner*/
-        this.setState={
+        this.setState({
             boardValue: val,
             redIsNext: !this.state.redIsNext,
-            winner: curWinner,
-        }
+            winner: curWinner,}
+        )
     }
 
     renderCol(i) {
@@ -152,7 +152,7 @@ class Board extends React.Component {
 
         
         const nextPlayer = this.state.redIsNext ? 'Red' : 'Yellow';
-        status= this.state.winner?  this.state.winner+ 'wins'  : 'Next player ' + nextPlayer; 
+        status= this.state.winner?  this.state.winner+ ' wins'  : 'Next player ' + nextPlayer; 
     
         
         /* Render all 7 columns (0-6)
@@ -183,14 +183,14 @@ NOTE(possible bug): if all 4 have null then it should return false
 since the game is not over, don't return true there
 */
 
-function check(a, b, c, d) {
-    if((a===b===c===d==='Red') || (a===b===c===d==='Yellow')){
-        return true;
-    }
-    else
-    return false;
 
+
+function check(a, b, c, d) {
+    if(a === b && b === c && c === d && a !== null)
+    return true;
+    return false;
 }
+
 
 /*
 Function to check if the game is over
@@ -203,17 +203,19 @@ In a similar manner check for the other 3 directions
 
 function gameOver(board) {
     //VERTICAL
-    for (let c = 0; c < 7; c++)
-        for (let r = 0; r < 3; r++)
+    for (let c = 0; c < 7; c++){
+        for (let r = 0; r < 3; r++){
             if (check(board[c][r], board[c][r+1], board[c][r+2], board[c][r+3]))
                 return true;
-    
+        }
+      }
     //HORIZONTAL
-    for (let r = 0; r < 6; r++)
-        for (let c = 0; c < 3; c++)
+    for (let r = 0; r < 6; r++){
+        for (let c = 0; c < 3; c++){
             if (check(board[c][r], board[c+1][r], board[c+2][r], board[c+3][r]))
                 return true;
-   
+           }
+       }
 
     //DIAGONAL
     for (let c = 0; c < 4; c++)
@@ -222,12 +224,13 @@ function gameOver(board) {
                 return true;
     
     //ANTIDIAGONAL
-    for (let r = 5; r > 2; r--)
-        for (let c = 6; c > 2; c--)
-            if (check(board[c][r], board[c-1][r-1], board[c-2][r-2], board[c-3][r-3]))
-                return true;
+    for (let r = 0; r < 3; r++)
+            for (let c = 3; c < 7; c++)
+                if (check(board[c][r], board[c-1][r+1], board[c-2][r+2], board[c-3][r+3]))
+                    return true;
     return null;
 }
+
 
 /* 
 Topmost Component Game

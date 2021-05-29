@@ -77,16 +77,16 @@ function Square(props) {
         for(let c=0; c<7; c++){
             if(board[c][5] === null)
                 return false;
-            return true;
-        }
             
+        }
+        return true;     
     }
 
     miniMax(tempBoard, curPlayer, depth, alpha, beta, track) {
         let score;
         //check if terminal state, depth == 0 or gameover or board filled(DRAW)
         //call get_state and return it
-        if(depth===0|| this.CheckFull(this.state.boardValue)|| gameOver(this.state.boardValue)){
+        if(depth===0|| this.CheckFull(tempBoard)|| gameOver(tempBoard)){
             score= get_state(tempBoard);
             return score;
         }
@@ -167,7 +167,7 @@ function Square(props) {
 
     AIplay() {
         //check if winner exists and return
-        if(this.state.winner|| this.CheckFull(this.state.boardValue))
+        if(this.state.winner !==null || this.CheckFull(this.state.boardValue))
             return;
         
 
@@ -193,11 +193,11 @@ function Square(props) {
 
         //put the computer token in pos column
         //check if game over
-        let result;
+        let findResult;
         for(let c=0; c<6; c++){
-            if(val[pos][c]===null){
-                val[pos][c]= curPlayer;
-                result= gameOver(val);
+            if(val[c][pos]===null){
+                val[c][pos]= curPlayer;
+                findResult= gameOver(val);
                 break;
             }
         }
@@ -212,7 +212,7 @@ function Square(props) {
         });
     }
 
-    handleClick(col) {
+handleClick(col) {
     /* Check if there exists a winner 
     If winner is not null then return since game is over 
     and any other click should not continue playing*/
@@ -242,14 +242,15 @@ function Square(props) {
         if(val[col][k]=== null){
             row= k;
             val[col][k]= curPlayer;
+            findResult=gameOver(val);
             break;
         }
             
     }
     if(row === null)
-    return;
+        return;
 
-    findResult=gameOver(val,col,row)
+    
 
 
     var curWinner = findResult? curPlayer : null;
@@ -409,7 +410,7 @@ since the game is not over, don't return true there
 
 function check(a, b, c, d) {
     if(a === b && b === c && c === d && a !== null)
-    return true;
+        return true;
     return false;
 }
 

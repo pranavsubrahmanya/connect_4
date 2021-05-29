@@ -175,7 +175,7 @@ function Square(props) {
         const val = this.state.boardValue.slice();
         const curPlayer = this.state.redIsNext? 'Red' : 'Yellow';
         
-        var depth = 6 //try changing this value in your browsers
+        var depth = 8 //try changing this value in your browsers
         //in mine this works at a decent speed
         var track = new Array(7).fill(7);
         //Track first empty position of each column

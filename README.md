@@ -88,4 +88,4 @@ Creates a new branch gh-pages in your repository and deploys the app. Make Sure 
 
 Also add the deploy in scripts in package.json as  `"deploy" : "gh-pages -d build"`
 
-Then run the command  `npm run deploy
+Then run the command   `npm run deploy`

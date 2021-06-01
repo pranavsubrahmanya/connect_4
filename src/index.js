@@ -109,7 +109,7 @@ function Square(props) {
                 if(curPlayer=== 'Yellow'){
                     tempBoard[c][track[c]]= curPlayer;
                     track[c]+=1;
-                    score= this.miniMax(tempBoard, curPlayer, depth-1, alpha, beta, track);
+                    score= this.miniMax(tempBoard, opponent, depth-1, alpha, beta, track);
 
                     if(score>best){
                         best = score;
@@ -302,13 +302,13 @@ handleClick(col) {
             <div className="game">
                 <div className="status">{status}</div>
                 <div className="game-board">                             
-                        {this.renderCol(6)}
-                        {this.renderCol(5)}
-                        {this.renderCol(4)}
-                        {this.renderCol(3)}
-                        {this.renderCol(2)}
-                        {this.renderCol(1)}
                         {this.renderCol(0)}
+                        {this.renderCol(1)}
+                        {this.renderCol(2)}
+                        {this.renderCol(3)}
+                        {this.renderCol(4)}
+                        {this.renderCol(5)}
+                        {this.renderCol(6)}
         
                         
                 </div>
